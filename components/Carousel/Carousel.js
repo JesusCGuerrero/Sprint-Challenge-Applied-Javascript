@@ -17,3 +17,90 @@
     <div class="right-button"> > </div>
   </div>
 */
+
+const carouselParent = document.querySelector('.carousel-container')
+
+carouselParent.append(carouselMaker());
+
+function carouselMaker() {
+  const carousel = document.createElement('div')
+  const leftButton = document.createElement('div')
+  const img1 = document.createElement('img')
+  const img2 = document.createElement('img')
+  const img3 = document.createElement('img')
+  const img4 = document.createElement('img')
+  const rightButton = document.createElement('div')
+
+  carousel.classList.add('carousel')
+  leftButton.classList.add('left-button')
+  rightButton.classList.add('right-button')
+
+  rightButton.textContent = '>'
+  leftButton.textContent = '<'
+
+  img1.src = "./assets/carousel/mountains.jpeg";
+  img2.src = "./assets/carousel/computer.jpeg";
+  img3.src = "./assets/carousel/trees.jpeg";
+  img4.src = "./assets/carousel/turntable.jpeg";
+
+  carousel.append(leftButton);
+  carousel.append(img1);
+  carousel.append(img2);
+  carousel.append(img3);
+  carousel.append(img4);
+  carousel.append(rightButton);
+
+  return carousel
+};
+
+// Event Stuff
+
+let grabCarouselImgs = document.querySelectorAll('.carousel img');
+let grabLeftButton = document.querySelector('.left-button');
+let grabRightButton = document.querySelector('.right-button');
+let currentIndex = 0;
+
+// images
+let images = Array.from(grabCarouselImgs);
+const reset = () =>{
+    for(let i = 0; i < images.length; i++){
+        images[i].style.display = 'none';
+    }
+}
+
+// Show first Img
+const firstImg = () => {
+    reset();
+    images[currentIndex].style.display = 'block';
+}
+
+firstImg();
+
+// Left Button
+const moveLeft = () => {
+  reset();
+  currentIndex--
+  images[currentIndex].style.display = 'block';
+}
+
+grabLeftButton.addEventListener('click', () => {
+  if (currentIndex === 0){
+    currentIndex = images.length;
+  }
+  moveLeft();
+})
+
+// Right Button
+const moveRight = () => {
+    reset();
+    currentIndex++
+    images[currentIndex].style.display = 'block';
+}
+
+grabRightButton.addEventListener('click', () => {
+
+    if(currentIndex === images.length - 1){
+      currentIndex = 0;
+    }
+    moveRight();
+});
